@@ -11,10 +11,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repo.UserRepo;
 
-import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -27,6 +24,7 @@ public class UserServ implements UserDetailsService {
     public void setUserRepo(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
@@ -40,6 +38,7 @@ public class UserServ implements UserDetailsService {
     public User findByUsername(String username) {
         return userRepo.findByUsername(username);
     }
+
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }

@@ -1,19 +1,17 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repo.UserRepo;
 
-import javax.management.relation.Role;
 import java.beans.Transient;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
-    //@Lazy
+
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
@@ -39,11 +37,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transient
     public void saveUser(User user) {
-        if(userRepo.findByUsername(user.getUsername()) == null) {
+        if (userRepo.findByUsername(user.getUsername()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepo.save(user);
         } else {
-         throw  new IllegalAccessError("User already exists");
+            throw new IllegalAccessError("User already exists");
         }
     }
 
