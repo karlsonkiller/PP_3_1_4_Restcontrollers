@@ -55,10 +55,18 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/admin/{id}/update_user")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+    @GetMapping("/admin/{id}/update_user")
+    public String getWhatUpdateUser(@ModelAttribute("id") Long id, Model model) {
+        model.addAttribute("user", userServiceImpl.getById(id));
+        model.addAttribute("roles", roleService.getAllUser());
+        return "update_user";
+    }
+
+    @PostMapping("/admin/{id}/update_user")
+    public String getUpdateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+        user.setPassword(user.getPassword());
         userServiceImpl.updateUser(id, user);
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
 
     @DeleteMapping("/admin/{id}")
