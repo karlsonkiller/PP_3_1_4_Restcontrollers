@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -29,6 +30,8 @@ public class User implements UserDetails {
     private String username;
     private String lastname;
     private String password;
+    private int age;
+    private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.EXTRA)
@@ -41,16 +44,13 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String lastname, String password, Set<Role> roles) {
+    public User(String username, String lastname, String password, Set<Role> roles, int age, String email) {
         this.roles = roles;
         this.username = username;
         this.lastname = lastname;
         this.password = password;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, lastname, password, roles);
+        this.age = age;
+        this.email = email;
     }
 
     @Override
@@ -66,6 +66,13 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getRoleNames() {
+        return roles.stream()
+                .map(role -> role.getName()
+                        .replace("ROLE_", ""))
+                .collect(Collectors.joining(" "));
     }
 
     @Override
@@ -92,6 +99,21 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
 
+    }
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Role> getRoles() {
@@ -129,16 +151,11 @@ public class User implements UserDetails {
         User user = (User) o;
         return Objects.equals(roles, user.roles) && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(lastname, user.lastname) && Objects.equals(password, user.password);
     }
-
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public int hashCode() {
+        return Objects.hash(id, username, lastname, password, roles);
     }
+
 }
 
 

@@ -52,9 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(Long id, User user) {
+    public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setId(id);
         userRepo.save(user);
     }
 }
