@@ -34,8 +34,7 @@ public class CreateUser {
         roleRepo.save(userRole);
 
 
-
-        userRepo.save(new User("user", "user", passwordEncoder.encode("user"), Set.of(userRole),20,"User@gmail.com"));
-        userRepo.save(new User("admin", "admin", passwordEncoder.encode("admin"), Set.of(adminRole),30,"Admin@gmail.com"));
+        userRepo.save(new User("user", "user", passwordEncoder.encode("user"), Set.of(userRole), 20, "User@gmail.com"));
+        userRepo.save(new User("admin", "admin", passwordEncoder.encode("admin"), Set.of(adminRole), 30, "Admin@gmail.com"));
     }
 }
