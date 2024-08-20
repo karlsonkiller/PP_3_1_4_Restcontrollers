@@ -17,8 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private UserDetailsService userDetailsService;
-
-
     @Autowired
     public void setUserService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -44,7 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
